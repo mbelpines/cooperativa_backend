@@ -29,12 +29,12 @@ export const getSocioById = async (req, res) => {
 // Crear socio
 export const createSocio = async (req, res) => {
   try {
-    const { numero_socio, nombre, apellidos, dni_cedula, estado, tipo_socio } = req.body;
+    const { numero_socio, nombre, apellidos, dni_cedula, estado, tipo_socio, fecha_nacimiento, direccion, telefono, fecha_ingreso } = req.body;
 
     const result = await pool.query(
-      `INSERT INTO socios (numero_socio, nombre, apellidos, dni_cedula, estado, tipo_socio)
-       VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
-      [numero_socio, nombre, apellidos, dni_cedula, estado, tipo_socio]
+      `INSERT INTO socios (numero_socio, nombre, apellidos, dni_cedula, estado, tipo_socio, fecha_nacimiento, direccion, telefono, fecha_ingreso)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *`,
+      [numero_socio, nombre, apellidos, dni_cedula, estado, tipo_socio, fecha_nacimiento, direccion, telefono, fecha_ingreso]
     );
 
     res.status(201).json(result.rows[0]);
