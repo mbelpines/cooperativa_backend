@@ -6,6 +6,13 @@ import prestamosRoutes from "./routes/prestamos.routes.js";
 const app = express();
 const port = process.env.PORT || 3000;
 
+import cors from "cors";
+app.use(cors());
+
+import morgan from "morgan";
+app.use(morgan("dev"));
+
+
 app.use(express.json());
 
 // Rutas
