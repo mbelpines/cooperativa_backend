@@ -22,20 +22,33 @@ export const getCuentaById = async (req, res) => {
     if (result.rows.length === 0) {
       return res.status(404).json({ message: "Cuenta no encontrada" });
     }
-
+  } catch (error) {
     res.json(result(500)).json({ error: error.message });
-  } catch (error) {}
+  }
 };
 
 //Crear cuenta
 export const createCuenta = async (req, res) => {
   try {
-    const { socio_id, numero_cuenta, tipo_cuenta, fecha_apertura, saldo_actual, estado } =
-      req.body;
+    const {
+      socio_id,
+      numero_cuenta,
+      tipo_cuenta,
+      fecha_apertura,
+      saldo_actual,
+      estado,
+    } = req.body;
 
     const result = await pool.query(
       `INSERT INTO cuentas (socio_id, numero_cuenta, tipo_cuenta, fecha_apertura, saldo_actual, estado) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
-      [socio_id, numero_cuenta, tipo_cuenta, fecha_apertura, saldo_actual, estado]
+      [
+        socio_id,
+        numero_cuenta,
+        tipo_cuenta,
+        fecha_apertura,
+        saldo_actual,
+        estado,
+      ]
     );
 
     res.status(201).json(result.rows[0]);
@@ -82,7 +95,7 @@ export const deleteCuenta = async (req, res) => {
       return res.status(404).json({ message: "Cuenta no encontrada}" });
     }
 
-    res.json({message: "Cuenta eliminada correctamente"})
+    res.json({ message: "Cuenta eliminada correctamente" });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
