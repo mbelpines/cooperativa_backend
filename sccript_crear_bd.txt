@@ -1,0 +1,137 @@
+-- =====================================
+-- CREACIÓN DE TABLAS PARA COOPERATIVA
+-- PostgreSQL (sin ON DELETE CASCADE)
+-- =====================================
+
+-- Tabla socios
+CREATE TABLE socios (
+    socio_id SERIAL PRIMARY KEY,
+    numero_socio VARCHAR(50) UNIQUE NOT NULL,
+    nombre VARCHAR(100) NOT NULL,
+    apellidos VARCHAR(100) NOT NULL,
+    dni_cedula VARCHAR(20) UNIQUE NOT NULL,
+    fecha_nacimiento DATE,
+    direccion VARCHAR(200),
+    telefono VARCHAR(20),
+    email VARCHAR(100),
+    fecha_ingreso DATE DEFAULT CURRENT_DATE,
+    estado VARCHAR(20) CHECK (estado IN ('Activo', 'Inactivo', 'Suspendido')),
+    tipo_socio VARCHAR(20) CHECK (tipo_socio IN ('Regular', 'Fundador', 'Honorario'))
+);
+
+-- Tabla aportaciones
+CREATE TABLE aportaciones (
+    aportacion_id SERIAL PRIMARY KEY,
+    socio_id INT NOT NULL REFERENCES socios(socio_id),
+    monto DECIMAL(12,2) NOT NULL,
+    fecha DATE DEFAULT CURRENT_DATE,
+    tipo VARCHAR(20) CHECK (tipo IN ('Obligatoria', 'Voluntaria')),
+    estado VARCHAR(20) CHECK (estado IN ('Pagada', 'Pendiente'))
+);
+
+-- Tabla cuentas
+CREATE TABLE cuentas (
+    cuenta_id SERIAL PRIMARY KEY,
+    socio_id INT NOT NULL REFERENCES socios(socio_id),
+    numero_cuenta VARCHAR(50) UNIQUE NOT NULL,
+    tipo_cuenta VARCHAR(20) CHECK (tipo_cuenta IN ('Ahorro', 'Corriente', 'Plazo Fijo')),
+    fecha_apertura DATE DEFAULT CURRENT_DATE,
+    saldo_actual DECIMAL(12,2) DEFAULT 0,
+    estado VARCHAR(20) CHECK (estado IN ('Activa', 'Inactiva', 'Bloqueada'))
+);
+
+-- Tabla transacciones
+CREATE TABLE transacciones (
+    transaccion_id SERIAL PRIMARY KEY,
+    cuenta_id INT NOT NULL REFERENCES cuentas(cuenta_id),
+    tipo VARCHAR(20) CHECK (tipo IN ('Depósito', 'Retiro', 'Transferencia')),
+    monto DECIMAL(12,2) NOT NULL,
+    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    descripcion VARCHAR(255),
+    cuenta_destino_id INT REFERENCES cuentas(cuenta_id)
+);
+
+-- Tabla productos financieros
+CREATE TABLE productos_financieros (
+    producto_id SERIAL PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    descripcion VARCHAR(255),
+    tasa_interes DECIMAL(5,2),
+    plazo_minimo INT,
+    plazo_maximo INT,
+    monto_minimo DECIMAL(12,2),
+    monto_maximo DECIMAL(12,2),
+    estado VARCHAR(20) CHECK (estado IN ('Activo', 'Inactivo'))
+);
+
+-- Tabla prestamos
+CREATE TABLE prestamos (
+    prestamo_id SERIAL PRIMARY KEY,
+    socio_id INT NOT NULL REFERENCES socios(socio_id),
+    producto_id INT NOT NULL REFERENCES productos_financieros(producto_id),
+    monto_solicitado DECIMAL(12,2) NOT NULL,
+    monto_aprobado DECIMAL(12,2),
+    tasa_interes DECIMAL(5,2),
+    plazo_meses INT,
+    fecha_solicitud DATE DEFAULT CURRENT_DATE,
+    fecha_aprobacion DATE,
+    fecha_desembolso DATE,
+    estado VARCHAR(20) CHECK (estado IN ('Solicitado','Aprobado','Rechazado','Desembolsado','Pagado','Mora'))
+);
+
+-- Tabla pagos_prestamos
+CREATE TABLE pagos_prestamos (
+    pago_id SERIAL PRIMARY KEY,
+    prestamo_id INT NOT NULL REFERENCES prestamos(prestamo_id),
+    numero_cuota INT NOT NULL,
+    monto_capital DECIMAL(12,2) NOT NULL,
+    monto_interes DECIMAL(12,2) NOT NULL,
+    fecha_vencimiento DATE NOT NULL,
+    fecha_pago DATE,
+    estado VARCHAR(20) CHECK (estado IN ('Pendiente','Pagado','Mora'))
+);
+
+-- Tabla garantias
+CREATE TABLE garantias (
+    garantia_id SERIAL PRIMARY KEY,
+    prestamo_id INT NOT NULL REFERENCES prestamos(prestamo_id),
+    tipo VARCHAR(20) CHECK (tipo IN ('Hipotecaria','Prendaria','Personal','Fiduciaria')),
+    descripcion VARCHAR(255),
+    valor_estimado DECIMAL(12,2),
+    documentos VARCHAR(255)
+);
+
+-- Tabla empleados
+CREATE TABLE empleados (
+    empleado_id SERIAL PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    apellidos VARCHAR(100) NOT NULL,
+    dni_cedula VARCHAR(20) UNIQUE NOT NULL,
+    cargo VARCHAR(100),
+    departamento VARCHAR(100),
+    fecha_contratacion DATE DEFAULT CURRENT_DATE,
+    salario DECIMAL(12,2),
+    estado VARCHAR(20) CHECK (estado IN ('Activo','Inactivo'))
+);
+
+-- Tabla directiva
+CREATE TABLE directiva (
+    directivo_id SERIAL PRIMARY KEY,
+    socio_id INT NOT NULL REFERENCES socios(socio_id),
+    cargo VARCHAR(100),
+    periodo_inicio DATE NOT NULL,
+    periodo_fin DATE,
+    estado VARCHAR(20) CHECK (estado IN ('Activo','Finalizado'))
+);
+
+-- Tabla ahorros programados
+CREATE TABLE ahorros_programados (
+    ahorro_id SERIAL PRIMARY KEY,
+    socio_id INT NOT NULL REFERENCES socios(socio_id),
+    cuenta_id INT NOT NULL REFERENCES cuentas(cuenta_id),
+    monto_periodico DECIMAL(12,2) NOT NULL,
+    periodicidad VARCHAR(20) CHECK (periodicidad IN ('Semanal','Quincenal','Mensual')),
+    fecha_inicio DATE DEFAULT CURRENT_DATE,
+    fecha_fin DATE,
+    estado VARCHAR(20) CHECK (estado IN ('Activo','Pausado','Finalizado'))
+);
