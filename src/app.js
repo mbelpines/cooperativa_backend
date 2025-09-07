@@ -11,6 +11,7 @@ import garantiasRoutes from "./routes/garantias.routes.js";
 import productosFinancierosRoutes from "./routes/productos.financieros.routes.js";
 import empleadosRoutes from "./routes/empleados.routes.js";
 import usuariosRoutes from "./routes/usuarios.routes.js";
+import authRoutes from "./routes/auth.routes.js";
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -34,6 +35,8 @@ app.use("/api/garantias", garantiasRoutes);
 app.use("/api/productos/financieros", productosFinancierosRoutes);
 app.use("/api/empleados", empleadosRoutes);
 app.use("/api/usuarios", usuariosRoutes);
+app.use("/api/auth", authRoutes);
+
 
 app.listen(port, () => {
   console.log(`Servidor corriendo en http://localhost:${port}`);
