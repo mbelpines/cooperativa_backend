@@ -135,3 +135,15 @@ CREATE TABLE ahorros_programados (
     fecha_fin DATE,
     estado VARCHAR(20) CHECK (estado IN ('Activo','Pausado','Finalizado'))
 );
+
+-- Tabla usuarios
+CREATE TABLE usuarios (
+    usuario_id SERIAL PRIMARY KEY,
+    empleado_id INT NOT NULL REFERENCES empleados(empleado_id) ON DELETE CASCADE,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL, -- se almacenará encriptada con bcrypt
+    rol VARCHAR(50) CHECK (rol IN ('Administrador', 'Cajero', 'Analista', 'Gerente')) NOT NULL,
+    estado VARCHAR(20) CHECK (estado IN ('Activo', 'Inactivo')) DEFAULT 'Activo',
+    fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
