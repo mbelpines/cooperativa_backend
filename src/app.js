@@ -8,6 +8,7 @@ import aportacionesRoutes from "./routes/aportaciones.routes.js";
 import transaccionesRoutes from "./routes/transacciones.routes.js";
 import pagosPrestamosRoutes from "./routes/pagos.prestamos.routes.js";
 import garantiasRoutes from "./routes/garantias.routes.js";
+import productosFinancierosRoutes from "./routes/productos.financieros.routes.js";
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -28,6 +29,7 @@ app.use("/api/aportaciones", aportacionesRoutes);
 app.use("/api/transacciones", transaccionesRoutes);
 app.use("/api/pagos/prestamos", pagosPrestamosRoutes);
 app.use("/api/garantias", garantiasRoutes);
+app.use("/api/productos/financieros", productosFinancierosRoutes);
 
 app.listen(port, () => {
   console.log(`Servidor corriendo en http://localhost:${port}`);
