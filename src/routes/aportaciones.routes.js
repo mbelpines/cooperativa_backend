@@ -7,13 +7,15 @@ import {
   updateAportacion,
 } from "../controllers/aportaciones.controller.js";
 
+import { verifyToken, authorize } from "../middlewares/authMiddleware.js";
+
 const router = Router();
 
 // Rutas de aportaciones
-router.get("/", getAportaciones);
-router.get("/:id", getAportacionById);
-router.get("/socio/:socio_id", getAportacionesBySocio); 
-router.post("/", createAportacion);
-router.put("/:id", updateAportacion);
+router.get("/", verifyToken, authorize("aportaciones", "read"), getAportaciones);
+router.get("/:id", verifyToken, authorize("aportaciones", "read"), getAportacionById);
+router.get("/socio/:socio_id", verifyToken, authorize("aportaciones", "read"), getAportacionesBySocio); 
+router.post("/", verifyToken, authorize("aportaciones", "create"), createAportacion);
+router.put("/:id", verifyToken, authorize("aportaciones", "update"), updateAportacion);
 
 export default router;

@@ -7,12 +7,14 @@ import {
   deleteProducto,
 } from "../controllers/productos.financieros.controller.js";
 
+import { verifyToken, authorize } from "../middlewares/authMiddleware.js";
+
 const router = Router();
 
-router.get("/", getProductos);
+router.get("/", verifyToken, authorize("productos_financieros", "read"),  getProductos);
 router.get("/:id", getProductoById);
-router.post("/", createProducto);
-router.put("/:id", updateProducto);
-router.delete("/:id", deleteProducto);
+router.post("/", verifyToken, authorize("productos_financieros", "create"), createProducto);
+router.put("/:id", verifyToken, authorize("productos_financieros", "update"), updateProducto);
+router.delete("/:id", verifyToken, authorize("productos_financieros", "delete"), deleteProducto);
 
 export default router;

@@ -1,0 +1,64 @@
+{
+  "socios": {
+    "create": ["Admin", "Gerente", "Oficial de Negocios", "Oficial de Servicios"],
+    "read": ["Admin", "Gerente", "Oficial de Negocios", "Oficial de Servicios", "Cajero"],
+    "update": ["Admin", "Gerente", "Oficial de Negocios", "Oficial de Servicios"],
+    "delete": ["Admin", "Gerente"]
+  },
+  "cuentas": {
+    "create": ["Admin", "Gerente", "Oficial de Servicios"],
+    "read": ["Admin", "Gerente", "Oficial de Negocios", "Oficial de Servicios", "Cajero"],
+    "update": ["Admin", "Gerente", "Oficial de Servicios"],
+    "delete": ["Admin", "Gerente"],
+    "transactions": ["Admin", "Oficial de Servicios", "Cajero"]
+  },
+  "prestamos": {
+    "create": ["Admin", "Gerente", "Oficial de Negocios"],
+    "read": ["Admin", "Gerente", "Oficial de Negocios", "Oficial de Servicios", "Cajero"],
+    "update": ["Admin", "Gerente", "Oficial de Negocios"],
+    "delete": ["Admin", "Gerente"],
+    "pay": ["Admin", "Cajero"]
+  },
+  "aportaciones": {
+    "create": ["Admin", "Oficial de Servicios", "Cajero"],
+    "read": ["Admin", "Gerente", "Oficial de Servicios", "Oficial de Negocios", "Cajero"],
+    "update": ["Admin", "Oficial de Servicios"],
+    "delete": ["Admin"]
+  },
+  "transacciones": {
+    "create": ["Admin", "Oficial de Servicios", "Cajero"],
+    "read": ["Admin", "Gerente", "Oficial de Servicios", "Cajero"],
+    "update": ["Admin"],
+    "delete": ["Admin"]
+  },
+  "pagos_prestamos": {
+    "create": ["Admin", "Cajero"],
+    "read": ["Admin", "Gerente", "Oficial de Negocios", "Cajero"],
+    "update": ["Admin"],
+    "delete": ["Admin"]
+  },
+  "garantias": {
+    "create": ["Admin", "Gerente", "Oficial de Negocios"],
+    "read": ["Admin", "Gerente", "Oficial de Negocios", "Oficial de Servicios"],
+    "update": ["Admin", "Gerente", "Oficial de Negocios"],
+    "delete": ["Admin"]
+  },
+  "productos_financieros": {
+    "create": ["Admin", "Gerente"],
+    "read": ["Admin", "Gerente", "Oficial de Negocios", "Oficial de Servicios", "Cajero"],
+    "update": ["Admin", "Gerente"],
+    "delete": ["Admin"]
+  },
+  "empleados": {
+    "create": ["Admin", "Gerente"],
+    "read": ["Admin", "Gerente", "Oficial de Negocios", "Oficial de Servicios", "Cajero"],
+    "update": ["Admin", "Gerente"],
+    "delete": ["Admin"]
+  },
+  "usuarios": {
+    "create": ["Admin"],
+    "read": ["Admin", "Gerente"],
+    "update": ["Admin"],
+    "delete": ["Admin"]
+  }
+}
