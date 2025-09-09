@@ -1,5 +1,8 @@
 import jwt from "jsonwebtoken";
-import permisos from "../config/permisos.json" assert { type: "json" };
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
+const permisos = require("../config/permisos.json");
+
 
 const JWT_SECRET = process.env.JWT_SECRET || "supersecret";
 
