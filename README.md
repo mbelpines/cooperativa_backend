@@ -46,9 +46,9 @@ PORT = "3000"
 
 4. Levantar el servidor en desarrollo:
 
-   
+   ```bash
    npm run dev
-  
+   ```
 
    Servidor corriendo en:
 
@@ -194,6 +194,7 @@ Authorization: Bearer <TOKEN>
 
 
 ´´Este  backend está hecho con glitter de @mbelpines 🌟´´
+
 
 
 
