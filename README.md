@@ -33,13 +33,13 @@ Este es el backend de la **Cooperativa**, desarrollado en **Node.js + Express + 
    Crea un archivo **.env** en la raíz y define:
 
  ```env
-DB_USER=postgres
-DB_PASS=tu_password
-DB_HOST=127.0.0.1
-DB_NAME=postgres
-DB_PORT=5432
-JWT_SECRET=supersecret
-PORT=3000
+DB_USER = "postgres"
+DB_PASS = "tu_password"
+DB_HOST = "127.0.0.1"
+DB_NAME = "db_name"
+DB_PORT = "5432"
+JWT_SECRET= "keysecret"
+PORT = "3000"
 ```
 
   
@@ -194,5 +194,6 @@ Authorization: Bearer <TOKEN>
 
 
 ´´Este  backend está hecho con glitter de @mbelpines 🌟´´
+
 
 
