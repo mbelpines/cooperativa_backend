@@ -23,10 +23,12 @@ Este es el backend de la **Cooperativa**, desarrollado en **Node.js + Express + 
 2. Instalar dependencias:
 
    
-   ```npm install
+   ```bash
+   npm install
+   ```
   
 
-3. Configurar variables de entorno:
+4. Configurar variables de entorno:
 
    Crea un archivo **.env** en la raíz y define:
 
@@ -38,6 +40,7 @@ DB_NAME=postgres
 DB_PORT=5432
 JWT_SECRET=supersecret
 PORT=3000
+```
 
   
 
@@ -191,4 +194,5 @@ Authorization: Bearer <TOKEN>
 
 
 ´´Este  backend está hecho con glitter de @mbelpines 🌟´´
+
 
